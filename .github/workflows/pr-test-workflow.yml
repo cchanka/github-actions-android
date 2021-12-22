@@ -27,7 +27,9 @@ jobs:
           arguments: test
       
       - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action/composite@v1
+        uses: dorny/test-reporter@v1
         if: always()
         with:
-          files: app/build/test-results/**/*.xml
+          name: Android Unit Tests
+          path: app/build/test-results/**/*.xml
+          reporter: java-junit
