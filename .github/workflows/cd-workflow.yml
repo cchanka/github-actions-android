@@ -26,9 +26,6 @@ jobs:
         with:
           arguments: assembleDebug
 
-      - run: |
-          ls -al ./app/build/outputs/apk
-
       - name: Sign Android debug release
         uses: r0adkll/sign-android-release@v1
         with:
@@ -37,10 +34,7 @@ jobs:
           alias: ${{ secrets.ANDROID_KEYALIAS }}
           keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
-
-      - run: |
-          ls -al ./app/build/outputs/apk
-    
+      
       - name: Upload Debug APK
         uses: actions/upload-artifact@v2
         with:
@@ -57,5 +51,12 @@ jobs:
         with:
           name: Debug Artifacts
 
-      - name: Display structure of downloaded files
-        run: ls -R
+      - name: upload artefact to App Center
+        uses: wzieba/AppCenter-Github-Action@v1
+        with:
+          appName: cchanka/android-github-actions-test
+          token: ${{secrets.APP_CENTER_TOKEN}}
+          group: Collaborators
+          file: app-prod-debug-signed.apk
+          notifyTesters: true
+          debug: false
