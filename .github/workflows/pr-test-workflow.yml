@@ -7,5 +7,5 @@ on:
   workflow_dispatch:
   
 jobs:
-  Test:
+  pr-test:
     uses: cchanka/github-actions-android-workflows/.github/workflows/android-test-workflow.yml@main
