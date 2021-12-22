@@ -26,6 +26,9 @@ jobs:
         with:
           arguments: assembleDebug
 
+      - run: |
+          ls -al ./app/build/outputs/apk
+
       - name: Sign Android debug release
         uses: r0adkll/sign-android-release@v1
         with:
@@ -44,5 +47,14 @@ jobs:
           name: Debug Artifacts
           path: app/build/outputs/apk/*.apk
 
-      - run: |
-          ls -al ./app/build/outputs/apk
+      
+
+  deploy-ms-appcenter:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: Debug Artifacts
+
+      - name: Display structure of downloaded files
+        run: ls -R
