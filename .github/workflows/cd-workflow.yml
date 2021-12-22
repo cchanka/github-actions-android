@@ -20,7 +20,8 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Running Tests
+
+      - name: Creating debug APK
         uses: gradle/gradle-build-action@v2
         with:
           arguments: assembleDebug
@@ -33,9 +34,15 @@ jobs:
           alias: ${{ secrets.ANDROID_KEYALIAS }}
           keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+
+      - run: |
+          ls -al ./app/build/outputs/apk
     
       - name: Upload Debug APK
         uses: actions/upload-artifact@v2
         with:
-          name: Debug artifact
+          name: Debug Artifacts
           path: app/build/outputs/apk/*.apk
+
+      - run: |
+          ls -al ./app/build/outputs/apk
