@@ -10,5 +10,18 @@ jobs:
   build:
     runs-on: macos-10.15
     steps:
-      - name: Test Build
-        run: echo testing...
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Setup JAVA
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Running Tests
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: assembleDebug
+    
